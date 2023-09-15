@@ -23,39 +23,8 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.296597, 0, 0, 0, 0.296597, 0, 0, 0, 0.296597, 0.467857, 0.544234, 0)
 size = Vector3(0.852839, 0.890496, 1.78913)
 
-[node name="DashTarget" type="Node3D" parent="PlayerRot"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03783, 0, 0)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="PlayerRot/DashTarget"]
-transform = Transform3D(0.242406, 0, 0, 0, 0.242406, 0, 0, 0, 0.242406, 0, 0, 0)
-
 [node name="Cooldowns" type="Node3D" parent="."]
 
 [node name="DashTimer" type="Timer" parent="Cooldowns"]
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Button" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -38.0
-offset_top = -37.0
-offset_right = -5.0
-offset_bottom = -6.0
-grow_horizontal = 0
-grow_vertical = 0
-disabled = true
 
 [connection signal="timeout" from="Cooldowns/DashTimer" to="." method="_on_dash_timer_timeout"]
