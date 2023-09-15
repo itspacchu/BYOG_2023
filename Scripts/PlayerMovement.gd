@@ -8,6 +8,7 @@ const ROT_SMOOTHING = 20.0
 const SPRINT_MULTIPLIER = 1.75
 
 var can_dash:bool = true
+var camera:Camera3D;
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -15,10 +16,19 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _rotate_player(delta):
 	$PlayerRot.rotation.y = lerp_angle($PlayerRot.rotation.y,atan2(-velocity.z,velocity.x),delta*ROT_SMOOTHING)
 
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	camera = get_viewport().get_camera_3d()
 
 func dash_handler(delta):
+	%DashParticles.emitting = true
 	var tweeni = create_tween()
+	tweeni.set_parallel(true)
 	tweeni.tween_property(self,"global_position",%DashTarget.global_position, 0.1)
+	tweeni.tween_property(camera,"fov",76, 0.01)
+	tweeni.set_parallel(false)
+	tweeni.tween_property(%DashParticles,"emitting",false, 0.1)
+	tweeni.tween_property(camera,"fov",75, 0.01)
 
 func _process(delta):
 	# Add the gravity.

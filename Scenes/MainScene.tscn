@@ -38,7 +38,7 @@ script = ExtResource("3_0elqi")
 playerNode = NodePath("../Player")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="PlayerParent"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.56685, 5)
+transform = Transform3D(1, 0, 0, 0, 0.661312, 0.750111, 0, -0.750111, 0.661312, 0, 10, 8.422)
 spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="PlayerParent/SpringArm3D"]
