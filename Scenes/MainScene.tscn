@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwhj3cqv0kbk2"]
+
+[ext_resource type="Texture2D" uid="uid://devoxbj1nnjt8" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="1_dfmhs"]
+[ext_resource type="PackedScene" uid="uid://n86tf7jbd0tr" path="res://Prefabs/Player.tscn" id="1_wfxg4"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="3_u345u"]
+[ext_resource type="Script" path="res://Scenes/CameraController.gd" id="4_68iup"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fe6cc"]
+albedo_texture = ExtResource("1_dfmhs")
+uv1_scale = Vector3(5, 5, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i68b2"]
+material = SubResource("StandardMaterial3D_fe6cc")
+size = Vector2(40, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0m0xh"]
+size = Vector3(40, 2, 40)
+
+[node name="Main" type="Node"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0376086, 0.0282321, -0.00167799)
+mesh = SubResource("PlaneMesh_i68b2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_0m0xh")
+
+[node name="Player" parent="." instance=ExtResource("1_wfxg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_u345u")
+
+[node name="PlayerParent" type="Node3D" parent="." node_paths=PackedStringArray("playerNode")]
+script = ExtResource("4_68iup")
+playerNode = NodePath("../Player")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="PlayerParent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79821, 3.12144)
+spring_length = 7.0
+
+[node name="Camera3D" type="Camera3D" parent="PlayerParent/SpringArm3D"]
