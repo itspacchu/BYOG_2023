@@ -1,14 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=4 format=3 uid="uid://n86tf7jbd0tr"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_218rj"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pme5x"]
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_218rj"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_218rj")
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_djq3l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.985088, 0, 0, 0, 0.985088, 0, 0, 0, 0.985088, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_pme5x")
+
+[node name="PlayerRot" type="Node3D" parent="."]
+
+[node name="Player_mesh" type="MeshInstance3D" parent="PlayerRot"]
+mesh = SubResource("CapsuleMesh_218rj")
+skeleton = NodePath("../..")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PlayerRot/Player_mesh"]
+transform = Transform3D(0.296597, 0, 0, 0, 0.296597, 0, 0, 0, 0.296597, 0.467857, 0.544234, 0)
+size = Vector3(0.852839, 0.890496, 1.78913)

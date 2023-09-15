@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwhj3cqv0kbk2"]
+[gd_scene load_steps=9 format=3 uid="uid://dwhj3cqv0kbk2"]
 
 [ext_resource type="Texture2D" uid="uid://devoxbj1nnjt8" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="1_dfmhs"]
 [ext_resource type="PackedScene" uid="uid://n86tf7jbd0tr" path="res://Prefabs/Player.tscn" id="1_wfxg4"]
-[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="3_u345u"]
-[ext_resource type="Script" path="res://Scenes/CameraController.gd" id="4_68iup"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="3_0elqi"]
+[ext_resource type="Environment" uid="uid://cfmwul4ijnucl" path="res://Environments/WorldEnvironment.tres" id="4_h1txl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fe6cc"]
 albedo_texture = ExtResource("1_dfmhs")
@@ -15,6 +15,8 @@ size = Vector2(40, 40)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0m0xh"]
 size = Vector3(40, 2, 40)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4tm15"]
 
 [node name="Main" type="Node"]
 
@@ -30,14 +32,25 @@ shape = SubResource("BoxShape3D_0m0xh")
 
 [node name="Player" parent="." instance=ExtResource("1_wfxg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_u345u")
 
 [node name="PlayerParent" type="Node3D" parent="." node_paths=PackedStringArray("playerNode")]
-script = ExtResource("4_68iup")
+script = ExtResource("3_0elqi")
 playerNode = NodePath("../Player")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="PlayerParent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79821, 3.12144)
-spring_length = 7.0
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.56685, 5)
+spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="PlayerParent/SpringArm3D"]
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerParent/SpringArm3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.155659, -0.987811, 0, 0.987811, 0.155659, 0, 0, 0)
+shape = SubResource("SphereShape3D_4tm15")
+target_position = Vector3(0, -6, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_h1txl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.965368, -0.207364, 0.158318, 0, 0.606835, 0.794828, -0.260892, -0.767301, 0.585819, 0, 4.16945, 0)
+shadow_enabled = true
