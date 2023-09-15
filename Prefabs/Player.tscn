@@ -1,10 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=8 format=3 uid="uid://n86tf7jbd0tr"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pme5x"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_218rj"]
+
+[sub_resource type="Curve" id="Curve_ditp3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.36218, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_067p7"]
+curve = SubResource("Curve_ditp3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eudd0"]
+lifetime_randomness = 0.35
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_align_y = true
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_067p7")
+
+[sub_resource type="BoxMesh" id="BoxMesh_nw6yn"]
+size = Vector3(0.3, 0.3, 0.3)
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_djq3l")
@@ -22,3 +40,48 @@ skeleton = NodePath("../..")
 [node name="CSGBox3D" type="CSGBox3D" parent="PlayerRot/Player_mesh"]
 transform = Transform3D(0.296597, 0, 0, 0, 0.296597, 0, 0, 0, 0.296597, 0.467857, 0.544234, 0)
 size = Vector3(0.852839, 0.890496, 1.78913)
+
+[node name="DashTarget" type="Node3D" parent="PlayerRot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03783, 0, 0)
+
+[node name="DashParticles" type="GPUParticles3D" parent="PlayerRot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.840751, -0.668075, 0)
+emitting = false
+amount = 100
+lifetime = 0.7
+explosiveness = 0.25
+visibility_aabb = AABB(-0.754144, -0.246556, -0.908593, 1.50829, 1.06538, 1.81719)
+process_material = SubResource("ParticleProcessMaterial_eudd0")
+draw_pass_1 = SubResource("BoxMesh_nw6yn")
+
+[node name="Cooldowns" type="Node3D" parent="."]
+
+[node name="DashTimer" type="Timer" parent="Cooldowns"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -38.0
+offset_top = -37.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+disabled = true
+
+[connection signal="timeout" from="Cooldowns/DashTimer" to="." method="_on_dash_timer_timeout"]
