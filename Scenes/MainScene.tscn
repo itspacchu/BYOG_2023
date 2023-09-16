@@ -41,7 +41,6 @@ playerNode = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 7, 7)
 
 [node name="Camera3D" type="Camera3D" parent="PlayerParent/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerParent/SpringArm3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.155659, -0.987811, 0, 0.987811, 0.155659, 0, 0, 0)

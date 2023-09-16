@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=9 format=3 uid="uid://n86tf7jbd0tr"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 
@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_218rj"]
 
 [sub_resource type="Curve" id="Curve_ditp3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.36218, 0.0, 0, 0]
+_data = [Vector2(0, 0.494737), 0.0, 0.0, 0, 0, Vector2(1, 0.989474), 1.44094, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_067p7"]
@@ -17,12 +17,25 @@ curve = SubResource("Curve_ditp3")
 lifetime_randomness = 0.35
 emission_shape = 1
 emission_sphere_radius = 1.0
-particle_flag_align_y = true
-scale_min = 0.0
+angular_velocity_min = -242.7
+radial_accel_min = -4.49
+radial_accel_max = 13.48
+angle_min = -113.3
+angle_max = 97.1
+scale_min = 2.0
+scale_max = 5.0
 scale_curve = SubResource("CurveTexture_067p7")
 
-[sub_resource type="BoxMesh" id="BoxMesh_nw6yn"]
-size = Vector3(0.3, 0.3, 0.3)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbyl1"]
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_ah6id"]
+material = SubResource("StandardMaterial3D_pbyl1")
+size = Vector2(0.1, 0.1)
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_djq3l")
@@ -48,16 +61,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03783, 0, 0)
 [node name="DashParticles" type="GPUParticles3D" parent="PlayerRot"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.840751, -0.668075, 0)
-emitting = false
-amount = 100
+amount = 200
 lifetime = 0.7
-explosiveness = 0.25
+fixed_fps = 60
 visibility_aabb = AABB(-0.754144, -0.246556, -0.908593, 1.50829, 1.06538, 1.81719)
 process_material = SubResource("ParticleProcessMaterial_eudd0")
-draw_pass_1 = SubResource("BoxMesh_nw6yn")
+draw_pass_1 = SubResource("QuadMesh_ah6id")
 
 [node name="RayCast3D" type="RayCast3D" parent="PlayerRot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(10, 0, 0)
 
 [node name="Cooldowns" type="Node3D" parent="."]
