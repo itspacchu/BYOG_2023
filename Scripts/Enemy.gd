@@ -8,6 +8,8 @@ var attack_duration = 1.0
 
 const SPEED = 2.0 
 
+var player_position
+
 @export var hoverSpeed:float = 1.0
 @export var hoverAmplitude:float = 0.1
 @export var upwardYOffset:float = 1.0
@@ -16,7 +18,7 @@ const SPEED = 2.0
 # hovering should go here
 func _process(delta):
 	$MeshInstance3D.position.y = upwardYOffset + sin(hoverSpeed * Time.get_unix_time_from_system()) * hoverAmplitude
-
+	look_at(Vector3(player_position.x,position.y,player_position.z))
 
 func _physics_process(delta):
 	var current_position = global_transform.origin
@@ -37,6 +39,7 @@ func _physics_process(delta):
 		$AttackTimer.start(attack_duration)
 
 func update_target_location(target_location):
+	player_position = target_location
 	nav_agent.set_target_position(target_location)
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):

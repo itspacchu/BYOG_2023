@@ -19,22 +19,6 @@ const MAX_HEALTH:int = 100;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-func _rotate_player(delta):
-	#$PlayerRot.rotation.y = lerp_angle($PlayerRot.rotation.y,atan2(-velocity.z,velocity.x),delta*ROT_SMOOTHING)
-	pass
-#func _rotate_player(delta):
-#	var space_state = get_world_3d().direct_space_state
-#	var mouse_position = get_viewport().get_mouse_position()
-#
-#	camera_ray_origin = camera.project_ray_origin(mouse_position)
-#	camera_ray_end = camera_ray_origin+camera.project_ray_normal(mouse_position) * 2000
-#
-#	var query = PhysicsRayQueryParameters3D.create(camera_ray_origin, camera_ray_end); 
-#	var intersection = space_state.intersect_ray(query)
-#
-#	if not intersection.is_empty():
-#		var look_pos = intersection.position
-#		$PlayerRot.look_at(Vector3(look_pos.x,position.y,look_pos.z),Vector3.UP)    
 
 
 func _unhandled_input(event):
@@ -104,7 +88,6 @@ func _process(delta):
 	if direction:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
-		_rotate_player(delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed * 10 * delta)
 		velocity.z = move_toward(velocity.z, 0, move_speed * 10 * delta)
