@@ -20,8 +20,8 @@ const MAX_HEALTH:int = 100;
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _rotate_player(delta):
-	$PlayerRot.rotation.y = lerp_angle($PlayerRot.rotation.y,atan2(-velocity.z,velocity.x),delta*ROT_SMOOTHING)
-
+	#$PlayerRot.rotation.y = lerp_angle($PlayerRot.rotation.y,atan2(-velocity.z,velocity.x),delta*ROT_SMOOTHING)
+	pass
 #func _rotate_player(delta):
 #	var space_state = get_world_3d().direct_space_state
 #	var mouse_position = get_viewport().get_mouse_position()
@@ -36,8 +36,18 @@ func _rotate_player(delta):
 #		var look_pos = intersection.position
 #		$PlayerRot.look_at(Vector3(look_pos.x,position.y,look_pos.z),Vector3.UP)    
 
+
+func _unhandled_input(event):
+	if(event is InputEventMouseMotion):
+		$Control/crosshair.position = event.position - $Control/crosshair.scale/2
+		var cwinsize = Vector2(get_window().size.x,get_window().size.y)/2
+		var mouse_pos_center = cwinsize - event.position
+		var angle_mouse_from_center = atan2(mouse_pos_center.y,mouse_pos_center.x)
+		$PlayerRot.rotation.y = PI-angle_mouse_from_center
+		
+
 func _ready():
-#	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	camera = get_viewport().get_camera_3d()
 	health = MAX_HEALTH
 
@@ -99,7 +109,6 @@ func _process(delta):
 		velocity.x = move_toward(velocity.x, 0, move_speed * 10 * delta)
 		velocity.z = move_toward(velocity.z, 0, move_speed * 10 * delta)
 
-	_rotate_player(delta)
 	move_and_slide()
 
 func _on_dash_timer_timeout():

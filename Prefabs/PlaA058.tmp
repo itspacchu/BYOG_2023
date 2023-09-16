@@ -1,12 +1,13 @@
-[gd_scene load_steps=27 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=25 format=3 uid="uid://n86tf7jbd0tr"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 [ext_resource type="Script" path="res://Scripts/rot_delayed.gd" id="2_6n5u5"]
-[ext_resource type="Texture2D" uid="uid://dno85mm3hb435" path="res://Images/crosshair011.png" id="2_wxlws"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pme5x"]
 radius = 1.02308
 height = 2.04617
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_218rj"]
 
 [sub_resource type="Curve" id="Curve_ditp3"]
 _data = [Vector2(0, 0.494737), 0.0, 0.0, 0, 0, Vector2(1, 0.989474), 1.44094, 0.0, 0, 0]
@@ -30,17 +31,6 @@ scale_curve = SubResource("CurveTexture_067p7")
 anim_speed_max = 1.0
 anim_offset_max = 1.0
 attractor_interaction_enabled = false
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbyl1"]
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="QuadMesh" id="QuadMesh_ah6id"]
-material = SubResource("StandardMaterial3D_pbyl1")
-size = Vector2(0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p52x"]
 
@@ -308,11 +298,19 @@ _data = {
 script = ExtResource("1_djq3l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.30596e-08, 0, -0.985088, 0, 0.985088, 0, 0.985088, 0, -4.30596e-08, 0, 0.0186263, 0)
+transform = Transform3D(0.985088, 0, 0, 0, 0.985088, 0, 0, 0, 0.985088, 0, 0.0186263, 0)
 shape = SubResource("CapsuleShape3D_pme5x")
 
 [node name="PlayerRot" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Player_mesh" type="MeshInstance3D" parent="PlayerRot"]
+visible = false
+mesh = SubResource("CapsuleMesh_218rj")
+skeleton = NodePath("../..")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PlayerRot/Player_mesh"]
+transform = Transform3D(0.296597, 0, 0, 0, 0.296597, 0, 0, 0, 0.296597, 0.467857, 0.544234, 0)
+size = Vector3(0.852839, 0.890496, 1.78913)
 
 [node name="DashTarget" type="Node3D" parent="PlayerRot"]
 unique_name_in_owner = true
@@ -321,13 +319,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03783, 0, 0)
 [node name="DashParticles" type="GPUParticles3D" parent="PlayerRot"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.840751, -0.668075, 0)
-emitting = false
 amount = 200
 lifetime = 0.7
 fixed_fps = 60
 visibility_aabb = AABB(-0.754144, -0.246556, -0.908593, 1.50829, 1.06538, 1.81719)
 process_material = SubResource("ParticleProcessMaterial_eudd0")
-draw_pass_1 = SubResource("QuadMesh_ah6id")
 
 [node name="RayCast3D" type="RayCast3D" parent="PlayerRot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382807, 0, 0)
@@ -440,7 +436,6 @@ attachments/29/spatial_attachment_path = NodePath("../..")
 attachments/29/offset = Vector3(-0.233193, -0.167912, 0.0223012)
 
 [node name="Cooldowns" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="DashTimer" type="Timer" parent="Cooldowns"]
 
@@ -510,24 +505,7 @@ gravity = Vector2(0, -900)
 scale_amount_max = 4.0
 color = Color(1, 0, 0, 1)
 
-[node name="crosshair" type="TextureRect" parent="Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -324.0
-offset_right = -504.0
-offset_bottom = -252.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("2_wxlws")
-
 [node name="rot_delayed" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("2_6n5u5")
 
 [node name="sword" type="CSGBox3D" parent="rot_delayed"]
