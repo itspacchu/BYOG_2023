@@ -5,4 +5,3 @@ extends Node3D
 	
 func _process(delta):
 	global_position = lerp(global_position,playerNode.global_position,followSpeed*delta)
-	$SpringArm3D/Camera3D/ShapeCast3D.look_at(playerNode.global_position)

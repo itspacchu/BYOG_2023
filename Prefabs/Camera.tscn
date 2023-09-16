@@ -1,20 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cufiir44majld"]
+[gd_scene load_steps=3 format=3 uid="uid://c2ncsu67mdjvq"]
 
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="1_btytw"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_4tm15"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l42qk"]
 
-[node name="PlayerParent" type="Node3D" node_paths=PackedStringArray("playerNode")]
+[node name="PlayerParent" type="Node3D"]
 script = ExtResource("1_btytw")
-playerNode = NodePath("")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 7, 7)
+transform = Transform3D(1, 0, 0, 0, 0.628764, 0.777596, 0, -0.777596, 0.628764, 0, 0.465886, 0.390337)
+shape = SubResource("CapsuleShape3D_l42qk")
+spring_length = 7.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="ShapeCast3D" type="ShapeCast3D" parent="SpringArm3D/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.155659, -0.987811, 0, 0.987811, 0.155659, 0, 0, 0)
-shape = SubResource("SphereShape3D_4tm15")
-target_position = Vector3(0, -6, 0)

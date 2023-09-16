@@ -56,6 +56,9 @@ func _process(delta):
 	$Control/Button.disabled = not can_dash
 	if(can_dash):
 		$Control/Button.text = str(ceil($Cooldowns/DashTimer.time_left))
+		
+	if(Input.is_action_just_pressed("attack")):
+		$rot_delayed/sword_attacker.play("ATTACK")
 	
 	if direction:
 		velocity.x = direction.x * move_speed
