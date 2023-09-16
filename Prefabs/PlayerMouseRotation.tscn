@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=8 format=3 uid="uid://ca53jc16kxdae"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_0qs3d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pme5x"]
 
@@ -31,7 +31,7 @@ scale_curve = SubResource("CurveTexture_067p7")
 size = Vector3(0.3, 0.3, 0.3)
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_djq3l")
+script = ExtResource("1_0qs3d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.985088, 0, 0, 0, 0.985088, 0, 0, 0, 0.985088, 0, 0, 0)

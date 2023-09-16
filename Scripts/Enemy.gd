@@ -2,9 +2,12 @@ extends CharacterBody3D
 
 const SPEED = 2.0 
 @onready var nav_agent = $NavigationAgent3D
+
 var player_out_of_range
+
 var is_attacking
 var attack_duration = 1.0
+
 
 func _physics_process(delta):
 	var current_position = global_transform.origin
