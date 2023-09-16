@@ -112,7 +112,8 @@ mesh = SubResource("CylinderMesh_debo5")
 shape = SubResource("ConvexPolygonShape3D_w5egk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.499157, -0.555413, 0.665101, 0.431695, 0.824921, 0.36489, -0.75132, 0.104984, 0.651534, 0, 0, 0)
+transform = Transform3D(0.595725, -0.564488, 0.571371, 0.431695, 0.824921, 0.364889, -0.677312, 0.0292845, 0.735113, 0, 0, 0)
+shadow_enabled = true
 
 [node name="PlayerParent" parent="." node_paths=PackedStringArray("playerNode") instance=ExtResource("3_x1eh6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5148, 3.34578, 15.9397)
@@ -129,3 +130,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.55928, 0.466356, 2.96507)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -0.43912, 25.192, 24.2492)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]

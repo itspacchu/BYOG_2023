@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=10 format=3 uid="uid://n86tf7jbd0tr"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 
@@ -23,6 +23,16 @@ scale_curve = SubResource("CurveTexture_067p7")
 
 [sub_resource type="BoxMesh" id="BoxMesh_nw6yn"]
 size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_jqb3j"]
+cull_mode = 2
+albedo_color = Color(0, 0.545098, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_c1rb2"]
+material = SubResource("ORMMaterial3D_jqb3j")
+size = Vector2(2, 1)
+subdivide_width = 5
+subdivide_depth = 5
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_djq3l")
@@ -58,6 +68,36 @@ draw_pass_1 = SubResource("BoxMesh_nw6yn")
 
 [node name="RayCast3D" type="RayCast3D" parent="PlayerRot"]
 target_position = Vector3(10, 0, 0)
+
+[node name="SoftBody3D" type="SoftBody3D" parent="PlayerRot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47093, 0.559699, 0)
+mesh = SubResource("PlaneMesh_c1rb2")
+skeleton = NodePath("../..")
+parent_collision_ignore = NodePath("../..")
+damping_coefficient = 0.04
+drag_coefficient = 0.3
+pinned_points = [42, 35, 28, 21, 14, 7, 0]
+attachments/0/point_index = 42
+attachments/0/spatial_attachment_path = NodePath("..")
+attachments/0/offset = Vector3(-0.470928, 0.559699, -0.5)
+attachments/1/point_index = 35
+attachments/1/spatial_attachment_path = NodePath("..")
+attachments/1/offset = Vector3(-0.470928, 0.559699, -0.333333)
+attachments/2/point_index = 28
+attachments/2/spatial_attachment_path = NodePath("..")
+attachments/2/offset = Vector3(-0.470928, 0.559699, -0.166667)
+attachments/3/point_index = 21
+attachments/3/spatial_attachment_path = NodePath("..")
+attachments/3/offset = Vector3(-0.470928, 0.559699, 4.96705e-09)
+attachments/4/point_index = 14
+attachments/4/spatial_attachment_path = NodePath("..")
+attachments/4/offset = Vector3(-0.470928, 0.559699, 0.166667)
+attachments/5/point_index = 7
+attachments/5/spatial_attachment_path = NodePath("..")
+attachments/5/offset = Vector3(-0.470928, 0.559699, 0.333333)
+attachments/6/point_index = 0
+attachments/6/spatial_attachment_path = NodePath("..")
+attachments/6/offset = Vector3(-0.470928, 0.559699, 0.5)
 
 [node name="Cooldowns" type="Node3D" parent="."]
 
