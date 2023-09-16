@@ -57,7 +57,6 @@ process_material = SubResource("ParticleProcessMaterial_eudd0")
 draw_pass_1 = SubResource("BoxMesh_nw6yn")
 
 [node name="RayCast3D" type="RayCast3D" parent="PlayerRot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(10, 0, 0)
 
 [node name="Cooldowns" type="Node3D" parent="."]
