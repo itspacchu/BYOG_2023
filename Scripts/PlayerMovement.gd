@@ -21,10 +21,14 @@ func _ready():
 	camera = get_viewport().get_camera_3d()
 
 func dash_handler(delta):
+	var dash_end_position = %DashTarget.global_position
+	if($PlayerRot/RayCast3D.get_collider()):
+		dash_end_position = $PlayerRot/RayCast3D.get_collision_point()
+		
 	%DashParticles.emitting = true
 	var tweeni = create_tween()
 	tweeni.set_parallel(true)
-	tweeni.tween_property(self,"global_position",%DashTarget.global_position, 0.1)
+	tweeni.tween_property(self,"global_position",dash_end_position, 0.1)
 	tweeni.tween_property(camera,"fov",76, 0.01)
 	tweeni.set_parallel(false)
 	tweeni.tween_property(%DashParticles,"emitting",false, 0.1)

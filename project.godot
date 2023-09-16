@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="BYOG_2023"
-run/main_scene="res://Scenes/MainScene.tscn"
+run/main_scene="res://Scenes/TestScene.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -51,6 +51,7 @@ sprint={
 
 common/physics_ticks_per_second=120
 common/physics_jitter_fix=0.0
+3d/default_gravity_vector=Vector3(0, -9.8, 0)
 
 [rendering]
 

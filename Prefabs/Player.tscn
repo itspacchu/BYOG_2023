@@ -56,6 +56,10 @@ visibility_aabb = AABB(-0.754144, -0.246556, -0.908593, 1.50829, 1.06538, 1.8171
 process_material = SubResource("ParticleProcessMaterial_eudd0")
 draw_pass_1 = SubResource("BoxMesh_nw6yn")
 
+[node name="RayCast3D" type="RayCast3D" parent="PlayerRot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(10, 0, 0)
+
 [node name="Cooldowns" type="Node3D" parent="."]
 
 [node name="DashTimer" type="Timer" parent="Cooldowns"]
