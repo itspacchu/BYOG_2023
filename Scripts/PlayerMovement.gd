@@ -1,14 +1,17 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
-const AIR_SPEED = 3.0
-const JUMP_VELOCITY = 14.0
-const ROT_SMOOTHING = 20.0
-const SPRINT_MULTIPLIER = 1.75
+const SPEED:float = 5.0
+const AIR_SPEED:float = 3.0
+const JUMP_VELOCITY:float = 14.0
+const ROT_SMOOTHING:float = 20.0
+const SPRINT_MULTIPLIER:float = 1.75
 
 var can_dash:bool = true
 var camera:Camera3D;
+
+var health:int;
+const MAX_HEALTH:int = 100;
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,6 +22,7 @@ func _rotate_player(delta):
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera = get_viewport().get_camera_3d()
+	health = MAX_HEALTH
 
 func dash_handler(delta):
 	var dash_end_position = %DashTarget.global_position
@@ -33,6 +37,15 @@ func dash_handler(delta):
 	tweeni.set_parallel(false)
 	tweeni.tween_property(%DashParticles,"emitting",false, 0.1)
 	tweeni.tween_property(camera,"fov",75, 0.01)
+
+func take_damage(hitpoints:float):
+	$Control/BottomBars/UIAnimplayer.play("hurt")
+	health -= hitpoints
+	process_health()
+
+func process_health():
+	var remapped = remap(health,0,MAX_HEALTH,0,256)
+	$Control/BottomBars/BASE/HEALTHBAR.size.x = remapped
 
 func _process(delta):
 	# Add the gravity.
@@ -59,6 +72,7 @@ func _process(delta):
 		
 	if(Input.is_action_just_pressed("attack")):
 		$rot_delayed/sword_attacker.play("ATTACK")
+		take_damage(10)
 	
 	if direction:
 		velocity.x = direction.x * move_speed
@@ -73,3 +87,6 @@ func _process(delta):
 
 func _on_dash_timer_timeout():
 	can_dash = true
+
+func hurt_particles():
+	$Control/BottomBars/HurtUIParticles.emitting=true

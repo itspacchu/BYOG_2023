@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2ngmrvv767rh"]
+
+[sub_resource type="Theme" id="Theme_eadfe"]
+
+[sub_resource type="Animation" id="Animation_pmi65"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BASE/HEALTHBAR:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BASE/HEALTHBAR:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6sqcq"]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BASE/HEALTHBAR:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116543, 0.521606, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BASE/HEALTHBAR:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.127384, 0.168704, 0.210918, 0.254845),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-6, -7), Vector2(-10, 7), Vector2(5, 4), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.117361),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hurt_particles"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dheqm"]
+_data = {
+"RESET": SubResource("Animation_pmi65"),
+"hurt": SubResource("Animation_6sqcq")
+}
+
+[node name="BottomBars" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -84.0
+offset_right = -834.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_eadfe")
+
+[node name="BASE" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 44.0
+offset_right = 283.0
+offset_bottom = 60.0
+color = Color(0.34902, 0.34902, 0.34902, 1)
+
+[node name="HEALTHBAR" type="ColorRect" parent="BASE"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 16.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dheqm")
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(156, 43)
+emitting = false
+amount = 30
+lifetime = 0.4
+one_shot = true
+emission_shape = 3
+emission_rect_extents = Vector2(128, 32)
+gravity = Vector2(0, -900)
+scale_amount_max = 4.0
+color = Color(1, 0, 0, 1)
