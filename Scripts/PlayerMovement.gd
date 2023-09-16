@@ -14,12 +14,10 @@ var camera:Camera3D;
 #var camera_ray_end
 
 var health:int;
-const MAX_HEALTH:int = 100;
+const MAX_HEALTH:int = 10;
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-
 
 func _unhandled_input(event):
 	if(event is InputEventMouseMotion):
@@ -83,7 +81,6 @@ func _process(delta):
 		
 	if(Input.is_action_just_pressed("attack")):
 		$rot_delayed/sword_attacker.play("ATTACK")
-		take_damage(10)
 	
 	if direction:
 		velocity.x = direction.x * move_speed
@@ -99,3 +96,9 @@ func _on_dash_timer_timeout():
 
 func hurt_particles():
 	$Control/BottomBars/HurtUIParticles.emitting=true
+
+func _on_sword_trigger_body_entered(body):
+	if(body.is_in_group("enemies")):
+		body.take_damage(1)
+		print(body.health)
+		

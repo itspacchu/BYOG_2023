@@ -1,11 +1,15 @@
-[gd_scene load_steps=27 format=3 uid="uid://n86tf7jbd0tr"]
+[gd_scene load_steps=29 format=3 uid="uid://n86tf7jbd0tr"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_djq3l"]
 [ext_resource type="Script" path="res://Scripts/rot_delayed.gd" id="2_6n5u5"]
 [ext_resource type="Texture2D" uid="uid://dno85mm3hb435" path="res://Images/crosshair011.png" id="2_wxlws"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pme5x"]
-radius = 1.02308
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gj18l"]
+radius = 0.74
+height = 2.04617
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jtalt"]
+radius = 0.461689
 height = 2.04617
 
 [sub_resource type="Curve" id="Curve_ditp3"]
@@ -195,6 +199,9 @@ material = SubResource("StandardMaterial3D_l78sb")
 size = Vector2(0.1, 0.1)
 orientation = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lkdjb"]
+size = Vector3(1, 5.70012, 1)
+
 [sub_resource type="Animation" id="Animation_16yu7"]
 resource_name = "ATTACK"
 length = 0.5
@@ -304,12 +311,18 @@ _data = {
 "RESET": SubResource("Animation_dscld")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_djq3l")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="PlayerTrigger" type="Area3D" parent="." groups=["Player"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerTrigger" groups=["Player"]]
 transform = Transform3D(-4.30596e-08, 0, -0.985088, 0, 0.985088, 0, 0.985088, 0, -4.30596e-08, 0, 0.0186263, 0)
-shape = SubResource("CapsuleShape3D_pme5x")
+shape = SubResource("CapsuleShape3D_gj18l")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." groups=["Player"]]
+transform = Transform3D(-4.30596e-08, 0, -0.985088, 0, 0.985088, 0, 0.985088, 0, -4.30596e-08, 0, 0.0186263, 0)
+shape = SubResource("CapsuleShape3D_jtalt")
 
 [node name="PlayerRot" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -530,7 +543,7 @@ texture = ExtResource("2_wxlws")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("2_6n5u5")
 
-[node name="sword" type="CSGBox3D" parent="rot_delayed"]
+[node name="sword" type="CSGBox3D" parent="rot_delayed" groups=["Player"]]
 transform = Transform3D(0.984913, 0.144292, -0.0955238, -0.173046, 0.821258, -0.543682, 6.10947e-07, 0.55201, 0.833838, -0.409654, 0, 0)
 size = Vector3(0.0177864, 1, 0.0934748)
 
@@ -545,9 +558,17 @@ visibility_aabb = AABB(-0.544605, -4, -0.845819, 1.08921, 8, 1.69164)
 process_material = SubResource("ParticleProcessMaterial_atdcs")
 draw_pass_1 = SubResource("PlaneMesh_5s1lo")
 
+[node name="SwordTrigger" type="Area3D" parent="rot_delayed/sword" groups=["Player"]]
+transform = Transform3D(0.2, 1.19209e-08, 1.49012e-09, -1.19209e-08, 0.2, -3.72529e-09, -1.49012e-09, 3.72529e-09, 0.2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rot_delayed/sword/SwordTrigger" groups=["Player"]]
+transform = Transform3D(1, 0, 7.45058e-09, 2.98023e-08, 1, -1.02445e-08, -7.45058e-09, 2.14204e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_lkdjb")
+
 [node name="sword_attacker" type="AnimationPlayer" parent="rot_delayed"]
 libraries = {
 "": SubResource("AnimationLibrary_8q7ec")
 }
 
 [connection signal="timeout" from="Cooldowns/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="body_entered" from="rot_delayed/sword/SwordTrigger" to="." method="_on_sword_trigger_body_entered"]
