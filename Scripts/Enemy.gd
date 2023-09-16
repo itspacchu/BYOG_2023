@@ -16,7 +16,6 @@ const SPEED = 2.0
 # hovering should go here
 func _process(delta):
 	$MeshInstance3D.position.y = upwardYOffset + sin(hoverSpeed * Time.get_unix_time_from_system()) * hoverAmplitude
-	print(position.y)
 
 
 func _physics_process(delta):
@@ -26,7 +25,6 @@ func _physics_process(delta):
 	
 	player_out_of_range = nav_agent.distance_to_target() > nav_agent.target_desired_distance
 	nav_agent.avoidance_enabled = player_out_of_range
-	print(player_out_of_range)
 	
 	# if the player is out of enemy range AND is not attacking
 	if(player_out_of_range):
