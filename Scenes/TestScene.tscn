@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Scripts/NavmeshTest.gd" id="1_11aku"]
 [ext_resource type="Material" uid="uid://b21l8blafrggp" path="res://Materials/Floor.tres" id="2_7yhhi"]
 [ext_resource type="PackedScene" uid="uid://n86tf7jbd0tr" path="res://Prefabs/Player.tscn" id="2_600s8"]
-[ext_resource type="PackedScene" uid="uid://jkcja3o4nasp" path="res://Prefabs/enemy.tscn" id="3_3s5ds"]
+[ext_resource type="PackedScene" uid="uid://b5pqel2gqymd" path="res://Prefabs/enemy.tscn" id="3_3s5ds"]
 [ext_resource type="Texture2D" uid="uid://dwflntkvrsuan" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="3_wjh2m"]
-[ext_resource type="PackedScene" uid="uid://c2ncsu67mdjvq" path="res://Prefabs/Camera.tscn" id="3_x1eh6"]
+[ext_resource type="PackedScene" uid="uid://cufiir44majld" path="res://Prefabs/Camera.tscn" id="3_x1eh6"]
 [ext_resource type="Environment" uid="uid://cfmwul4ijnucl" path="res://Environments/WorldEnvironment.tres" id="7_adw6s"]
 [ext_resource type="Script" path="res://Scripts/WorldEnvironment.gd" id="8_v6h14"]
 
